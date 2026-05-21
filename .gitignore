@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Node
+node_modules/
+dist/
+bun.lock
+package-lock.json
+
+# Logs
+*.log
+
+# iii runtime files
+iii.lock
+data/
+
+# Terraform
+infra/.terraform/
+infra/.terraform.lock.hcl
+infra/terraform.tfstate
+infra/terraform.tfstate.backup
+
+# Model files (too large for git)
+*.gguf
+*.bin
+
