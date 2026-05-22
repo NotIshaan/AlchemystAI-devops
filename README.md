@@ -81,6 +81,11 @@ Running LLM inference on a CPU-only `t2.micro` (1GB RAM) presents distinct memor
    `{"error":"Invocation timeout after 30000ms: inference::get_response"}`
 3. **Logging & Verification:** To track requests through the RPC chain despite the timeout, I added logging inside the python worker (`inference_worker.py`). When a request comes in, it outputs `REQUEST RECEIVED: Starting generation...` to systemd logs. Once generated, the text is printed to stdout. You can verify successful end-to-end receipt and model output by inspecting the Inference VM logs.
 
+### Proof of Concept
+The following screenshot demonstrates the system's observability. The right terminal shows the API Gateway correctly throwing the 30-second `iii-sdk` timeout, while the left terminal shows the Inference Worker successfully completing the generation 2 minutes later in the isolated private subnet:
+
+![Observability Proof](timeout-observability-proof.jpg)
+
 ## API Usage and Sample Curl
 
 Query the Nginx Gateway VM public IP:
