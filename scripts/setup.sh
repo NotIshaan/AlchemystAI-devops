@@ -130,7 +130,7 @@ echo "Executing offline setup and swap configuration on the Inference VM..."
 ssh -i $SSH_KEY ec2-user@$INFERENCE_IP "bash -s" << EOF
     # Setup Swap to prevent OOM
     if [ ! -f /swapfile ]; then
-        sudo dd if=/dev/zero of=/swapfile bs=1M count=2048
+        sudo dd if=/dev/zero of=/swapfile bs=1M count=4096
         sudo chmod 600 /swapfile
         sudo mkswap /swapfile
         sudo swapon /swapfile
