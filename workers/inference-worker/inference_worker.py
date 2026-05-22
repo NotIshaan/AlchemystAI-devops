@@ -71,13 +71,14 @@ tokenizer.chat_template = ("""{{ bos_token }}
 
 # 3. Run inference
 def run_inference_handler(payload: Dict[str, str | List[Dict[str, Any]]]) -> Dict[str, Any]:
+    print("REQUEST RECEIVED: Starting generation...", flush=True)
     # prompt = "Explain quantum entanglement in simple terms."
     messages = payload.get("messages", [])
 
     text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     inputs = tokenizer(text, return_tensors="pt").to(model.device)
 
-    output = model.generate(**inputs, max_new_tokens=100)
+    output = model.generate(**inputs, max_new_tokens=5)
     result = tokenizer.decode(output[0][inputs["input_ids"].shape[-1]:], skip_special_tokens=True)
 
     print(result)

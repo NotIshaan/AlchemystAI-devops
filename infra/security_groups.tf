@@ -4,8 +4,8 @@ resource "aws_security_group" "gateway"{
     vpc_id=aws_vpc.main.id
 
     ingress{
-        from_port=3111
-        to_port=3111
+        from_port=80
+        to_port=80
         protocol="tcp"
         cidr_blocks=["0.0.0.0/0"]
     }
