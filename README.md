@@ -59,8 +59,8 @@ The setup utilizes three AWS EC2 instances (all running on t2.micro to stay enti
 Because the private subnet is entirely air-gapped and lacks a NAT Gateway (omitted intentionally to remain within the free tier), these VMs are isolated from public package registries.
 
 Instead, the `setup.sh` script runs on the Gateway VM to build, package, and push all required assets:
-1. **Packaging:** Clones the repository, downloads Node.js binaries, Python 3.11 RPMs, offline Python wheel caches (including PyTorch, transformers, accelerate, and iii-sdk), and downloads the Gemma 270M GGUF model from Hugging Face.
-2. **Shipping:** Moves these compiled assets and wheels to the private instances using SCP via the bastion ssh key.
+1. **Packaging:** Clones the repository, downloads Node.js binaries, Python 3.11 RPMs, compiles Python site-packages (including PyTorch, transformers, accelerate, and iii-sdk), and downloads the Gemma 270M GGUF model from Hugging Face.
+2. **Shipping:** Moves these compiled assets and libraries to the private instances using SCP via the bastion ssh key.
 3. **Execution:** Performs remote SSH execution to configure swap space, install Python/Node, configure Systemd services for the workers/engine, and start them offline.
 
 The entire flow is triggered automatically during `terraform apply`.
@@ -130,7 +130,7 @@ curl -X POST http://<GATEWAY_PUBLIC_IP>/v1/chat/completions \
 ### What to Expect:
 - Terraform will provision the network and VM instances.
 - The private key and deploy scripts are automatically copied to the Gateway VM.
-- The Gateway downloads Node/Python/wheels/model and transfers them to the private subnet VMs.
+- The Gateway downloads Node/Python/libraries/model and transfers them to the private subnet VMs.
 - Testing the endpoint with the `curl` command above will result in a 30-second timeout error.
 - Log into the Inference VM and check the logs:
   ```bash

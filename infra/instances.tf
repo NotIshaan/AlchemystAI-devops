@@ -1,5 +1,5 @@
 resource "aws_key_pair" "main" {
-  key_name   = "alchemyst-key"
+  key_name   = "alchemyst-key-test"
   public_key = file("~/.ssh/alchemyst.pub")
 }
 
